@@ -22,7 +22,7 @@ describe('TEST Authorization API', () => {
     });
   });
 
-  describe('[POST] /login', () => {
+  // describe('[POST] /login', () => {
   //   it('response should have the Set-Cookie header with the Authorization token', () => {
   //     const userData: User = {
   //       email: 'example1@email.com',
