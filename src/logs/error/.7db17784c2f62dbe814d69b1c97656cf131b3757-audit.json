@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\Jawad\\express-backend\\src\\logs\\error\\.7db17784c2f62dbe814d69b1c97656cf131b3757-audit.json",
+    "files": [
+        {
+            "date": 1703781955822,
+            "name": "C:\\Users\\Jawad\\express-backend\\src\\logs\\error\\2023-12-28.log",
+            "hash": "c7e45667ce123759b0371f90f94d4aec2dbf09df3f70e870129989c0e84e890c"
+        },
+        {
+            "date": 1703889371093,
+            "name": "C:\\Users\\Jawad\\express-backend\\src\\logs\\error\\2023-12-29.log",
+            "hash": "ca90522d5cde5d2569219cad7d09bd016522929897217ce2f2275ccadb097c99"
+        }
+    ],
+    "hashType": "sha256"
+}
