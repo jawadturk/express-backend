@@ -17,6 +17,6 @@ jobs:
         run: npm test  
       - name: gcp-auth
         uses: 'google-github-actions/auth@v2'
-          with:
-            service_account: 'pipline-service-account@express-backend-411116.iam.gserviceaccount.com'
-            workload_identity_provider: 'projects/505110449924/locations/global/workloadIdentityPools/my-workload-identity-pool/providers/my-repo'
+        with:
+          service_account: 'pipline-service-account@express-backend-411116.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/505110449924/locations/global/workloadIdentityPools/my-workload-identity-pool/providers/my-repo'
