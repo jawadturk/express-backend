@@ -7,6 +7,9 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
+    env:
+      IMAGE_NAME: lesson-087
+      PROJECT_ID: express-backend-411116 
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -23,3 +26,21 @@ jobs:
         with:
           service_account: 'pipline-service-account@express-backend-411116.iam.gserviceaccount.com'
           workload_identity_provider: 'projects/505110449924/locations/global/workloadIdentityPools/my-workload-identity-pool/providers/my-repo'
+     
+      - name: Build Docker Image
+        run: docker build -t $IMAGE_NAME:latest .
+
+      - name: Configure Docker Client
+        run: |-
+          gcloud auth configure-docker --quiet
+          gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+
+      - name: Push Docker Image to Artifact Registry
+      env:
+        GIT_TAG: "1.0.1"
+        run: |-
+          docker tag $IMAGE_NAME:latest us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:latest
+          docker tag $IMAGE_NAME:latest us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:$GIT_TAG
+          docker push us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:latest
+          docker push us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:$GIT_TAG      
+
