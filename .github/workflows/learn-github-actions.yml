@@ -26,8 +26,9 @@ jobs:
     - name: Run tests
       run: npm test  
 
-    - name: gcp-auth
-      uses: 'google-github-actions/auth@v2'
+    - name: Authenticate to Google Cloud
+        id: auth
+      uses: 'google-github-actions/auth@v1'
       with:
         token_format: access_token
         service_account: 'pipline-service-account@express-backend-411116.iam.gserviceaccount.com'
@@ -39,7 +40,7 @@ jobs:
       with:
         registry: us-central1-docker.pkg.dev
         username: oauth2accesstoken
-        password: ${{ steps.gcp-auth.outputs.access_token }}    
+        password: ${{ steps.auth.outputs.access_token }}    
      
     - id: docker-push-tagged
       name: Tag Docker image and push to Google Artifact Registry
