@@ -28,7 +28,7 @@ jobs:
         workload_identity_provider: 'projects/505110449924/locations/global/workloadIdentityPools/my-workload-identity-pool/providers/my-repo'
      
     - name: Build Docker Image
-      run: docker build -t $IMAGE_NAME:latest .
+      run: docker build -f Dockerfile.prod -t $IMAGE_NAME:latest .
 
     - name: Configure Docker Client
       run: |-
