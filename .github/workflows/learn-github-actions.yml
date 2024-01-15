@@ -9,7 +9,8 @@ jobs:
       id-token: 'write'
     env:
       IMAGE_NAME: lesson-087
-      PROJECT_ID: express-backend-411116 
+      PROJECT_ID: express-backend-411116
+      GAR_REPO_NAME: container-images  
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js
@@ -19,28 +20,36 @@ jobs:
         cache: 'npm'
     - name: Install dependencies
       run: npm install
+
     - name: Run tests
       run: npm test  
+
     - name: gcp-auth
-      uses: 'google-github-actions/auth@v2'
+      uses: 'google-github-actions/auth@v3'
       with:
+        token_format: access_token
         service_account: 'pipline-service-account@express-backend-411116.iam.gserviceaccount.com'
         workload_identity_provider: 'projects/505110449924/locations/global/workloadIdentityPools/my-workload-identity-pool/providers/my-repo'
+        access_token_lifetime: 300s
      
-    - name: Build Docker Image
-      run: docker build -f Dockerfile.prod -t $IMAGE_NAME:latest .
-
-    - name: Configure Docker Client
-      run: |-
-        gcloud auth configure-docker --quiet
-        gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-
-    - name: Push Docker Image to Artifact Registry
+    - id: docker-push-tagged
+      name: Tag Docker image and push to Google Artifact Registry
       env:
         GIT_TAG: "1.0.1"
-      run: |-
-        docker tag $IMAGE_NAME:latest us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:latest
-        docker tag $IMAGE_NAME:latest us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:$GIT_TAG
-        docker push us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:latest
-        docker push us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:$GIT_TAG         
+      uses: docker/build-push-action@v5
+      with:
+        push: true
+        file: Dockerfile.prod
+        tags: |
+             us-central1-docker.pkg.dev/$PROJECT_ID/$GAR_REPO_NAME/$IMAGE_NAME:$GIT_TAG
+             us-central1-docker.pkg.dev/$PROJECT_ID/$GAR_REPO_NAME/$IMAGE_NAME:latest
+
+    # - name: Push Docker Image to Artifact Registry
+    #   env:
+    #     GIT_TAG: "1.0.1"
+    #   run: |-
+    #     docker tag $IMAGE_NAME:latest us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:latest
+    #     docker tag $IMAGE_NAME:latest us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:$GIT_TAG
+    #     docker push us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:latest
+    #     docker push us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:$GIT_TAG         
 
