@@ -51,15 +51,8 @@ jobs:
         push: true
         file: Dockerfile.prod
         tags: |
-             us-central1-docker.pkg.dev/express-backend-411116/container-images/express-backend:v1.0.0
+             us-central1-docker.pkg.dev/express-backend-411116/container-images/express-backend:${{ env.GIT_TAG }}
              us-central1-docker.pkg.dev/express-backend-411116/container-images/express-backend:latest
 
-    # - name: Push Docker Image to Artifact Registry
-    #   env:
-    #     GIT_TAG: "1.0.1"
-    #   run: |-
-    #     docker tag $IMAGE_NAME:latest us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:latest
-    #     docker tag $IMAGE_NAME:latest us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:$GIT_TAG
-    #     docker push us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:latest
-    #     docker push us-entral1-docker.pkg.dev/$PROJECT_ID/container-images/$IMAGE_NAME:$GIT_TAG         
+      
 
