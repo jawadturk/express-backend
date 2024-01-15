@@ -13,11 +13,13 @@ jobs:
       GAR_REPO_NAME: container-images  
     steps:
     - uses: actions/checkout@v4
+
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '20.x'
         cache: 'npm'
+        
     - name: Install dependencies
       run: npm install
 
@@ -33,11 +35,11 @@ jobs:
         access_token_lifetime: 300s
 
     - name: Login to Artifact Registry
-        uses: docker/login-action@v3
-        with:
-          registry: us-central1-docker.pkg.dev
-          username: oauth2accesstoken
-          password: ${{ steps.gcp-auth.outputs.access_token }}    
+      uses: docker/login-action@v3
+      with:
+        registry: us-central1-docker.pkg.dev
+        username: oauth2accesstoken
+        password: ${{ steps.gcp-auth.outputs.access_token }}    
      
     - id: docker-push-tagged
       name: Tag Docker image and push to Google Artifact Registry
