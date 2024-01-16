@@ -83,7 +83,7 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init
+      run: terraform init -input=false -backend-config="prefix=terraform/state" -backend-config="bucket=terraform-state-express-backend"
 
     - name: Terraform Validate
       id: validate
