@@ -66,6 +66,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: hashicorp/setup-terraform@v3
+    
+    - name: Authenticate to Google Cloud
+      id: auth
+      uses: 'google-github-actions/auth@v1'
+      with:
+        token_format: access_token
+        service_account: 'pipline-service-account@express-backend-411116.iam.gserviceaccount.com'
+        workload_identity_provider: 'projects/505110449924/locations/global/workloadIdentityPools/my-workload-identity-pool/providers/my-repo'
+        access_token_lifetime: 300s
 
     - name: Terraform fmt
       id: fmt
