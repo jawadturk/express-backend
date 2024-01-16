@@ -86,8 +86,6 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform init
-      env:
-        GOOGLE_OAUTH_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}  
 
     - name: Terraform Validate
       id: validate
@@ -97,10 +95,7 @@ jobs:
       id: plan
       run: terraform plan -no-color
       continue-on-error: true
-      env:
-        GOOGLE_OAUTH_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}  
-
-
+      
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       env:
