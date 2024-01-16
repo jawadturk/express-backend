@@ -1,7 +1,7 @@
 terraform {
     backend "gcs" { 
-      bucket  = "terraform-state-jb-cicdproject"
-      prefix  = "dev"
+      bucket  = "terraform-state-express-backend"
+      prefix  = "terraform/state"
     }
     required_providers {
     google = {
