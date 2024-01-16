@@ -1,17 +1,9 @@
-terraform {
-    backend "gcs" { 
-      bucket  = "terraform-state-express-backend"
-      prefix  = "terraform/state"
-    }
-    required_providers {
-    google = {
-      source = "hashicorp/google"
-      version = "4.51.0"
-    }
-  }
+resource "google_storage_bucket" "bucket" {
+  name     = "test-bucket-random-001122-22"
+  location = "us-central1"
 }
 
-provider "google" {
-  project = var.project_id
-  region = var.region
+resource "google_storage_bucket" "gcs_bucket" {
+  name     = "test-bucket-random-00112323"
+  location = "us-central1"
 }
